@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!-- Materials -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mp_500">
+    
+	<material name="Neobotix/Black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <material name="Neobotix/Blue">
+        <color rgba="0.0 0.0 0.8 1.0"/>
+    </material>
+
+    <material name="Neobotix/Green">
+        <color rgba="0.0 0.8 0.0 1.0"/>
+    </material>
+
+    <material name="Neobotix/Grey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+    </material>
+
+    <material name="Neobotix/Grey2">
+        <color rgba="0.9 0.9 0.9 1.0"/>
+    </material>
+
+    <material name="Neobotix/Red">
+        <color rgba="0.8 0.0 0.0 1.0"/>
+    </material>
+
+    <material name="Neobotix/White">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+    
+    <material name="Neobotix/Yellow">
+        <color rgba="1.0 1.0 0 10" />
+    </material>
+
+<!--++++++++++++++++++++++++++++++base_link++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+<!--0.5 8.5  median 4.5++++++++++++++++++++body++++++++++++++++++++++++++++--> 
+	<link name="base_link">
+	  <inertial>
+		  <mass value="5.67" />
+		    <origin xyz="-0.20 0 0.0" rpy="0 0 0"/>
+		    <inertia ixx="0.07" ixy="0.0" ixz="0.0"
+		             iyy="0.08" iyz="0.0" 
+		             izz="0.1" />
+	  </inertial>
+      <visual name='body'>
+        <origin xyz="0.0 0.0 0.08" rpy="0 0 1.57" /><!-- for STL -->
+        <geometry>
+            <mesh filename="package://mp500_description/meshes/MP500-BODY.STL" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="Neobotix/Grey" />
+      </visual>
+      <collision name='body_collision'>
+        <origin xyz="0.0 0.0 0.234" rpy="0 0 0" />
+        <geometry>
+          <box size="0.830 0.600 0.400"/>
+         </geometry>
+      </collision>
+<!--+++++++++++++++++++castor_front++++++++++++++++++++++++--> 
+	<visual name='castor_front_visual'>
+          <origin xyz="-0.32 0 0.018" rpy="0 0 0" />
+          <geometry>
+            <sphere radius="0.016"/>
+          </geometry>
+          <material name="Neobotix/Black" />
+      </visual>
+      <collision name='castor_front_collision'>
+	  	<origin xyz="-0.32 0 0.018 " rpy="0 0 0" />
+          <geometry>
+            <sphere radius="0.016"/>
+          </geometry>
+    </collision>
+<!--+++++++++++++++++++castor_back++++++++++++++++++++++++--> 
+	<visual name='castor_back_visual'>
+          <origin xyz="0.2 0 0.018" rpy="0 0 0" />
+          <geometry>
+            <sphere radius="0.016"/>
+          </geometry>
+          <material name="Neobotix/Black" />
+      </visual>
+      <collision name='castor_back_collision'>
+	  	<origin xyz="0.2 0 0.018 " rpy="0 0 0" />
+               <geometry>
+            <sphere radius="0.016"/>
+          </geometry>
+       </collision>
+    </link>
+
+<!--+++++++++++++++++++wheel_left_link++++++++++++++++++++++++--> 
+<link name="wheel_left_link" type="wheel">
+    <inertial>
+      <mass value="1.5" />
+      <origin xyz="0.0 0.0 -0.016" rpy="0 0 0" />
+      <inertia ixx="0.0051" ixy="0" ixz="0" iyy="0.0051" iyz="0" izz="0.009" />
+    </inertial>
+
+    <visual>
+     	<origin xyz="0.0 0.0 -0.016" rpy="0 0 1.57" />
+     	<geometry>
+	   <mesh filename="package://mp500_description/meshes/MP500-WHEEL.STL" scale="0.01 0.01 0.01"/>
+     	</geometry>
+     	<material name="Neobotix/Black" />
+    </visual>
+
+    <collision>
+     	<origin xyz="0.0 0.0 -0.016" rpy="0 0 0" />
+     	<geometry>
+        	<cylinder radius="0.075" length="0.03"/>
+     	</geometry>
+    </collision>
+</link>
+
+<!--+++++++++++++++++++wheel_left_joint++++++++++++++++++++++++--> 
+	<joint name="wheel_left_joint" type="revolute">
+		<origin xyz="0 -0.2645 0.127" rpy="0 0 0" />
+    	<axis xyz="0 1 0"/>
+    	<limit effort="1000.0" lower="-1e+16" upper="1e+16" velocity="3.5"/>
+    	<joint_properties damping="0.0" friction="0.0" />
+    	<parent link="base_link" />
+    	<child link="wheel_left_link" />
+    </joint>
+
+	<!--+++++++++++++++++++wheel_right_link++++++++++++++++++++++++--> 
+	<link name="wheel_right_link" type="wheel">
+		<inertial>
+		  <mass value="1.5" />
+		  <origin xyz="0 0.0 0.016" rpy="0 0 0" />
+		  <inertia ixx="0.0051" ixy="0" ixz="0" iyy="0.0051" iyz="0" izz="0.009" />
+		</inertial>
+
+		<visual>
+		 	<origin xyz="0 0.0 0.016" rpy="0 0 1.57" />
+		 	<geometry>
+			    <mesh filename="package://mp500_description/meshes/MP500-WHEEL.STL" scale="0.01 0.01 0.01"/>	
+		 	</geometry>
+		 	<material name="Neobotix/Black" />
+		</visual>
+
+		<collision>
+		 	<origin xyz="0.0 0.0 0.016" rpy="0 0 0" />
+		 	<geometry>
+		    	<cylinder radius="0.075" length="0.03"/>
+		 	</geometry>
+		</collision>
+	</link>
+
+	<!--+++++++++++++++++++wheel_right_joint++++++++++++++++++++++++--> 
+	<joint name="wheel_right_joint" type="revolute">
+    	<origin xyz="0 0.2645 0.127" rpy="0 0 0" />
+    	<axis xyz="0 1 0"/>
+    	<limit effort="1000.0" lower="-1e+16" upper="1e+16" velocity="3.5"/>
+    	<joint_properties damping="0.0" friction="0.0" />
+    	<parent link="base_link" />
+    	<child link="wheel_right_link" />
+    </joint>
+
+
+	<!--+++++++++++++++++++laserscanner_front_joint++++++++++++++++++++++++--> 
+	<joint name="laserscanner_front_joint" type="fixed">
+		  <axis xyz="0 1 0" />
+		  <origin xyz="0.244 0 0.141" rpy="3.14 0 0" />
+		  <parent link="base_link"/>
+		  <child link="laserscanner_front_link"/>
+	</joint>
+
+	<!--+++++++++++++++++++laserscanner_front_link++++++++++++++++++++++++-->
+	<link name="laserscanner_front_link" type="laser">
+		<inertial>
+			<mass value="0.001" />
+			<origin xyz="0 0 0.0" rpy="0 0 0" />
+			<inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
+	  	</inertial>
+	  	<visual>
+			<origin xyz="0 0 -0.04" rpy="0 0 -1.57" />
+			<geometry>
+		  		<mesh filename="package://neo_mp_500/robot_model/mp_500/meshes/SICK-S300.STL" />
+			</geometry>
+			<material name="Neobotix/Yellow" />
+	  	</visual>
+	  	<collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+		  	<cylinder length="0.154" radius="0.053" />
+			</geometry>
+	  	</collision>
+	</link>
+    
+</robot>
